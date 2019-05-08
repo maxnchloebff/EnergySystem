@@ -1,0 +1,66 @@
+
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<html>
+<head>
+
+    <title>It's the Intelligence Home system</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/rotate_button.css"/>
+    <script type="text/javascript" >
+        window.onload = function()
+        {
+            const oButton_system = document.getElementById("access_to_system");
+            const oButton_new_user = document.getElementById("register_new_user");
+            oButton_system.onclick = function(){
+                {% if islogin == True%}
+                    window.location.href ="/data";
+                {% else %}
+                    alert("You haven't login!!!")
+                    window.location.href ="/log_in";
+                {% endif %}
+
+            };
+            oButton_new_user.onclick = function(){
+                window.location.href ="/log_in";
+            };
+        };
+    </script>
+</head>
+<body>
+<br /><br /><br />
+<h1 align="center">Welcome to Intelligence Home system </h1>
+<div class="login_frame">
+</div>
+<div class="LoginWindow">
+    <!--<div>-->
+        <!--<form method="post" action="http://www.xwcms.net" onsubmit="return user_input()" class="login">-->
+            <!--<p>-->
+                <!--<label for="id">帐号:</label>-->
+                <!--<input type="text" name="id" id="id" value="">-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--<label for="password">密码:</label>-->
+                <!--<input type="password" name="password" id="password" value="">-->
+            <!--</p>-->
+            <!--<p class="login-submit">-->
+                <!--<button type="button" class="login-button">Login</button>-->
+            <!--</p>-->
+        <!--</form>-->
+    <!--</div>-->
+
+        <button id="access_to_system" class = rotate_button>
+            进入系统
+        </button>
+        <button id="register_new_user" class = rotate_button>
+            注册新用户
+        </button>
+</div>
+
+
+
+<div id="copyright">
+    <p>&copy;The copy right is reserved to Inteligence Home Group</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Contact Us</title>
+
+    <link type="text/css" href="../../static/css/contact_us.css" rel="stylesheet" />
+    <script src="../../static/js/contact_us.js"></script>
+
+</head>
+<body>
+
+
+
+<div id="hero-slides">
+
+    <div id="header">
+        <div id="logo" > </div>
+        <div id="menu" >
+        </div>
+
+    </div>
+
+    <div id="slides-cont">
+        <div class="button" id="next"></div>
+        <div class="button" id="prev"></div>
+        <div id="slides">
+            <div class="slide" style="background-image: url(../../static/image/人物头像1.jpg);">
+                <div class="number">01</div>
+                <div class="body">
+                    <div class="location">Hnagzhou</div>
+                    <div class="headline">Zhang Kai</div><a href="#">
+                    <div class="link">Contact</div></a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url(../../static/image/人物头像2.jpg);">
+                <div class="number">02</div>
+                <div class="body">
+                    <div class="location">Hangzhou</div>
+                    <div class="headline">Lv Junmao</div><a href="#">
+                    <div class="link">Contact</div></a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url(../../static/image/人物头像3.jpg);">
+                <div class="number">03</div>
+                <div class="body">
+                    <div class="location">Hangzhou</div>
+                    <div class="headline">Hu Junsong</div><a href="#">
+                    <div class="link">Contact</div></a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url(../../static/image/人物头像4.jpg);">
+                <div class="number">04</div>
+                <div class="body">
+                    <div class="location">Hangzhou</div>
+                    <div class="headline">Li Jianhui</div><a href="#">
+                    <div class="link">Contact</div></a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url(../../static/image/人物头像5.jpg);">
+                <div class="number">05</div>
+                <div class="body">
+                    <div class="location">Hangzhou</div>
+                    <div class="headline">Chen Xinwei</div><a href="#">
+                    <div class="link">Contact</div></a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url(../../static/image/人物头像6.jpg);">
+                <div class="number">06</div>
+                <div class="body">
+                    <div class="location">Hangzhou</div>
+                    <div class="headline">Qian Zhen</div><a href="#">
+                    <div class="link">Contact</div></a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url(../../static/image/人物头像7.jpg);">
+                <div class="number">07</div>
+                <div class="body">
+                    <div class="location">Hangzhou</div>
+                    <div class="headline">Yang Qinmin</div><a href="#">
+                    <div class="link">Contact</div></a>
+                </div>
+            </div>
+        </div>
+        <div id="next-catch"></div>
+        <div id="prev-catch"></div>
+    </div>
+
+</div>
+
+<script>
+    let hero = document.getElementById('hero-slides');
+    const menu = document.getElementById('menu');
+    let slides = document.getElementById('slides');
+    let next = [ 'next', 'next-catch' ].map(n => document.getElementById(n));
+    let prev = [ 'prev', 'prev-catch' ].map(n => document.getElementById(n));
+    let slideChildren = slides.children;
+    let slideCount = slides.children.length;
+    let currentlyDemoing = false;
+    let currentPage = 0;
+    let slidesPerPage = () => window.innerWidth > 1700 ? 4 : window.innerWidth > 1200 ? 3 : 2;
+    let maxPageCount = () => slideCount / slidesPerPage() - 1;
+
+    function goToPage(pageNumber = 0) {
+        currentPage = Math.min(maxPageCount(), Math.max(0, pageNumber));
+        console.log(currentPage);
+        hero.style.setProperty('--page', currentPage);
+    }
+
+    async function return_home() {
+        window.location.href = "/data";
+    }
+
+    next.forEach(n => n.addEventListener('click', () => !currentlyDemoing && goToPage(currentPage + 1)));
+    prev.forEach(n => n.addEventListener('click', () => !currentlyDemoing && goToPage(currentPage - 1)));
+    menu.addEventListener('click', return_home);
+
+
+
+    // window.addEventListener('resize', () => {
+    // console.log(document.body.style.getPropertyValue('--slide-per-page'));
+    // });
+</script>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+    <p>适用浏览器：360、FireFox、Chrome、Opera、傲游、搜狗、世界之窗. 不支持Safari、IE8及以下浏览器。</p>
+    <p>来源：<a href="http://sc.chinaz.com/" target="_blank">站长素材</a></p>
+</div>
+</body>
+</html>

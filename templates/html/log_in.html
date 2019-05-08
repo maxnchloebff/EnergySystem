@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user log-in</title>
+    <link href="../../static/css/login.css" rel="stylesheet">
+    <link href="../../static/css/beautiful_button.css" rel="stylesheet">
+    <script src="../../static/js/beautified_button.js" ></script>
+{#    <script src="../../static/js/login.js"> </script>#}
+    <script type="text/javascript">
+        let users={{ user_name|tojson }} ;
+        let password = {{ password|tojson }};
+        window.onload=function(){
+            const oUser = document.getElementsByName("username")[0];
+            const oPass = document.getElementsByName("password")[0];
+            const oSubmit = document.getElementById("submit");
+            const oRegister = document.getElementById("register");
+            const oRegisterForm = document.getElementById("register_form");
+            const oRegisterSubmit = document.getElementById("register_submit");
+            const oRegisterCancel = document.getElementById("register_cancel");
+            const oReturn = document.getElementById("returntoindex");
+            //登录的判断
+            oSubmit.onclick=function(){
+                index = 0;
+                {#alert(oUser.value)#}
+                for (index=0;index<users.length;index++){
+                    if(oUser.value==users[index] && oPass.value==password[index])
+                    {
+                        window.location.href = '/return/'+ users[index];
+                        window.location.href ="/data";
+                        window.alert("Login Success!!!");
+                        break;
+                    }
+                }
+                if(index==users.length){
+                    window.alert("Your ID or Password is wrong!!!");
+                    window.location.href ="/log_in";
+                }
+            };
+            oRegisterSubmit.onclick=function () {
+                newname = document.getElementsByName("username")[1].value;
+                newpassword = document.getElementsByName("password")[1].value;
+                phone = document.getElementById("phone_number").value;
+                window.location.href = "/register/"+newname+"/"+newpassword+"/"+phone
+            } ;
+            oReturn.onclick = function(){
+                window.location.href = "{{ url_for('index') }}"
+            }
+            //注册时候隐藏登录窗口，显示注册窗口
+            oRegister.onclick=function(){
+                oRegisterForm.style.display="block";
+                document.getElementById("username").style.display="none";
+                document.getElementById("password").style.display="none";
+                document.getElementById("id_submit").style.display="none";
+            };
+            //实现取消注册是的显示和隐藏
+            function register_cancel() {
+                oRegisterForm.style.display="none";
+                document.getElementById("username").style.display="block";
+                document.getElementById("password").style.display="block";
+                document.getElementById("id_submit").style.display="block";
+            }
+            oRegisterCancel.onclick=function(){
+                register_cancel()
+            };
+        } ;
+    </script>
+</head>
+<body>
+<h1> Please enter your ID and Password</h1>
+<fieldset  id="login"  >
+    <legend>
+        ID and Password
+    </legend>
+    <div id="username">
+        <label >username:</label>
+        <input type ="text" name = "username"
+               required ="required"/>
+    </div>
+    <br/>
+    <div id="password">
+        <label>password:</label>
+        <input type ="password" name = "password"
+               required ="required"/>
+    </div>
+    <br/>
+    <div  id="id_submit" class="outer_container">
+        <div class="container">
+            <button id="submit"  name="login" data-animation="ripple">Log-in</button>
+        </div>
+        <div class="container">
+            <button id="register" name="register" data-animation="ripple">Register!!!</button>
+        </div>
+        <div class="container">
+            <button id="returntoindex"  name="returntoindex" data-animation="ripple" >Return to index</button>
+        </div>
+    </div>
+    <fieldset id="register_form">
+        <br/>
+        <div id="newname">
+            <label >username:</label>
+            <input type ="text" name = "username"
+                   required ="required"/>
+        </div>
+        <br/>
+        <div id="newpass">
+            <label>password:</label>
+            <input type ="password" name = "password"
+                   required ="required"/>
+        </div>
+        <br/>
+        <div id="newpass">
+            <label>phone number:</label>
+            <input type ="text" name = "phone_number"
+                   required ="required" id = "phone_number"/>
+        </div>
+        <br/>
+        <div class="outer_container">
+            <div class="container">
+                <button id="register_submit"  name="register_submit" data-animation="ripple" >register</button>
+            </div>
+
+            <div class="container">
+                <button id="register_cancel"  name="register_cancel" data-animation="ripple" >cancel</button>
+            </div>
+
+
+
+        </div>
+    </fieldset>
+</fieldset>
+</body>
+</html>
