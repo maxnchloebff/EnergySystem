@@ -1,0 +1,53 @@
+body {
+    font-family:"Comic Sans MS", "Monotype Corsiva", cursive;
+    font-size: 20px;
+    background:  url("../image/bg.jpg") 0 0 repeat;
+    color: rgba(181, 95, 80, 0.99);
+}
+h1{
+    width: 50%;
+    margin: 100px auto;
+    padding: 10px;
+    text-align: center;
+}
+#login{
+    width: 50%;
+    padding: 10px;
+    margin: 100px auto;
+    border-radius: 10px;
+    border: 1px groove white;
+    text-align: center;
+    /*background-color: aquamarine;*/
+    -webkit-box-shadow: 20px 20px 20px  #c3ccc3;
+    -moz-box-shadow:  20px 20px 20px  #c3ccc3;
+    box-shadow:  20px 20px 20px  #c3ccc3;
+}
+legend{
+    /*background-color: lemonchiffon;*/
+    width: 30%;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    text-align: left;
+}
+#register{
+    /*display: none;*/
+}
+
+#register_form{
+    display: none;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+}
+.outer_container{
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+}

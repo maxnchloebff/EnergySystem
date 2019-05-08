@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('user1_day_8.csv', header=0, encoding='utf-8')
+df = pd.read_csv('Mydocuments/user1_day_8.csv', header=0, encoding='gbk')
 df1 = df.ix[:, 2:]
 kmeans = KMeans(n_clusters = 2, random_state = 10).fit(df1)
 df1['jllable'] = kmeans.labels_
@@ -17,7 +17,7 @@ kmeans.cluster_centers_
 ##新的dataframe，命名为new_df ，并输出到本地，命名为new_df.csv。
 new_df = df1[:]
 new_df
-new_df.to_csv('user1_8.csv')
+new_df.to_csv('new_result.csv')
 
 ##将用于聚类的数据的特征的维度降至2维，并输出降维后的数据，形成一个dataframe名字new_pca
 pca = PCA(n_components=2)
