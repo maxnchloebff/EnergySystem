@@ -1,5 +1,4 @@
 # EnergySystem
 The EnergySystem
 The current preview of our web system:
-
-/home/kai/Pictures/Screenshot from 2019-05-09 15-19-20.png
+![Image text](https://raw.githubusercontent.com/hongmaju/light7Local/master/img/productShow/20170518152848.png)
