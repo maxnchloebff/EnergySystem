@@ -84,18 +84,12 @@
                 </div>
             </div>
             <script>
-            var data1 = generateDayWiseTimeSeries(new Date("22 Apr 2017").getTime(), 115, {
-                min: 30,
-                max: 90
-            });
-            var data2 = generateDayWiseTimeSeries(new Date("22 Apr 2017").getTime(), 115, {
-                min: 40,
-                max: 100
-            });
-            var data3 = generateDayWiseTimeSeries(new Date("22 Apr 2017").getTime(), 115, {
-                min: 15,
-                max: 60
-            });
+            {#var data1 = generateDayWiseTimeSeries(new Date("22 Apr 2017").getTime(), 115, {min: 30, max: 90});#}
+            var data1 = {{ data_week|tojson}} ;
+            {#print(data[1])#}
+            {#window.alert(data1[0])#}
+            var data2 = {{ data_month|tojson }} ;
+            var data3 = {{ data_season|tojson }}  ;
             var options11 = {
                 chart: {
                     id: "chart12",
@@ -156,7 +150,7 @@
             var options12 = {
                 chart: {
                     id: "chart11",
-                    height: 130,
+                    height: 230,
                     type: "bar",
                     foreColor: "#ccc",
                     brush: {
@@ -169,8 +163,8 @@
                             opacity: 0.4
                         },
                         xaxis: {
-                            min: new Date("27 Jul 2017 10:00:00").getTime(),
-                            max: new Date("14 Aug 2017 10:00:00").getTime()
+                            min: {{ data_week[0][0] }},
+                            max: {{ data_week[-1][0] }}
                         }
                     }
                 },
@@ -196,7 +190,7 @@
                     }
                 },
                 yaxis: {
-                    tickAmount: 2
+                    tickAmount: 4
                 }
             };
             var chart12 = new ApexCharts(document.querySelector("#chart-bar1"), options12);
@@ -261,7 +255,7 @@
             var options22 = {
                 chart: {
                     id: "chart21",
-                    height: 130,
+                    height: 230,
                     type: "bar",
                     foreColor: "#ccc",
                     brush: {
@@ -274,8 +268,8 @@
                             opacity: 0.4
                         },
                         xaxis: {
-                            min: new Date("27 Jul 2017 10:00:00").getTime(),
-                            max: new Date("14 Aug 2017 10:00:00").getTime()
+                            min: {{ data_month[0][0] }},
+                            max: {{ data_month[-1][0] }}
                         }
                     }
                 },
@@ -301,7 +295,7 @@
                     }
                 },
                 yaxis: {
-                    tickAmount: 2
+                    tickAmount: 4
                 }
             };
             var chart22 = new ApexCharts(document.querySelector("#chart-bar2"), options22);
@@ -366,7 +360,7 @@
             var options32 = {
                 chart: {
                     id: "chart31",
-                    height: 130,
+                    height: 230,
                     type: "bar",
                     foreColor: "#ccc",
                     brush: {
@@ -379,8 +373,8 @@
                             opacity: 0.4
                         },
                         xaxis: {
-                            min: new Date("27 Jul 2017 10:00:00").getTime(),
-                            max: new Date("14 Aug 2017 10:00:00").getTime()
+                            min: {{ data_season[0][0] }},
+                            max: {{ data_season[-1][0] }}
                         }
                     }
                 },
@@ -406,25 +400,12 @@
                     }
                 },
                 yaxis: {
-                    tickAmount: 2
+                    tickAmount: 4
                 }
             };
             var chart32 = new ApexCharts(document.querySelector("#chart-bar3"), options32);
             chart32.render();
-            function generateDayWiseTimeSeries(baseval, count, yrange) {
-                var i = 0;
-                var series = [];
-                while (i < count) {
-                    var x = baseval;
-                    var y =
-                        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
 
-                    series.push([x, y]);
-                    baseval += 86400000;
-                    i++;
-                }
-                return series;
-            }
         </script>
             <div id="联系方式">
                 <p id="bottom">

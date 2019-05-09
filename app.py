@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 import mysql.connector as connector
 import numpy as np
 import datetime
+import time
 from wtforms import StringField, SubmitField, PasswordField
 
 """The global parameters"""
@@ -176,14 +177,46 @@ def prediction():
     if not Is_login:
         return redirect(url_for('log_in'))
     else:
-        result = Data.query.filter(Data.dataid == oCurrentUser.dataid).all()
-        data = []
-        time = []
-        for one in result:
-            data.append(one.use_data)
-            time.append(one.ts)
+        result_week = Data.query.filter(Data.dataid == oCurrentUser.dataid,Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080).all()
+        result_month = Data.query.filter(Data.dataid == oCurrentUser.dataid,Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080*4).all()
+        result_season = Data.query.filter(Data.dataid == oCurrentUser.dataid,Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080*4*3).all()
 
-        return render_template('html/prediction.html', current_user=Current_user, data=data,ts=time)
+        print()
+        data_week = []
+        data_month = []
+        data_season = []
+        timedelta_week = datetime.timedelta(hours=1)
+        timedelta_month = datetime.timedelta(hours=4)
+        timedelta_season = datetime.timedelta(hours=12)
+        selected_week = result_week[0]
+        selected_month = result_month[0]
+        selected_season = result_season[0]
+        for one in result_week:
+            # print(time.mktime(one.ts.timetuple()))
+            if selected_week.ts+timedelta_week <= one.ts:
+                selected_week = one
+                tem = []
+                tem.append(time.mktime(one.ts.timetuple())*1000)
+                tem.append(one.use_data)
+                data_week.append(tem)
+        for one in result_season:
+            # print(time.mktime(one.ts.timetuple()))
+            if selected_season.ts+timedelta_season <= one.ts:
+                selected_season = one
+                tem = []
+                tem.append(time.mktime(one.ts.timetuple())*1000)
+                tem.append(one.use_data)
+                data_season.append(tem)
+        for one in result_month:
+            # print(time.mktime(one.ts.timetuple()))
+            if selected_month.ts+timedelta_month <= one.ts:
+                selected_month = one
+                tem = []
+                tem.append(time.mktime(one.ts.timetuple())*1000)
+                tem.append(one.use_data)
+                data_month.append(tem)
+
+        return render_template('html/prediction.html', current_user=Current_user, data_season=data_season,data_week=data_week,data_month=data_month)
 
 @app.route('/delete_user/<user_name>')
 def delete_user(user_name):
