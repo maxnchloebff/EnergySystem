@@ -13,7 +13,7 @@ from wtforms import StringField, SubmitField, PasswordField
 Is_login = False
 Current_user = None
 oCurrentUser = None
-PORT = 7747
+PORT = 2567
 
 
 app = Flask(__name__)

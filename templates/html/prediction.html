@@ -11,15 +11,7 @@
 
     <style>
 
-        #wrapper1 {
-            padding-top: 20px;
-            background: #000524;
-            border: 1px solid #000;
-            box-shadow: 0 22px 35px -16px rgba(0, 0, 0, 0.71);
-            max-width: 650px;
-            margin: 35px auto;
-        }
-        #wrapper2 {
+        #wrapper1, #wrapper2, #wrapper3 {
             padding-top: 20px;
             background: #000524;
             border: 1px solid #000;
@@ -28,11 +20,7 @@
             margin: 35px auto;
         }
 
-        #chart-bar1 {
-            position: relative;
-            margin-top: -38px;
-        }
-        #chart-bar2 {
+        #chart-bar1, #chart-bar2,#chart-bar3{
             position: relative;
             margin-top: -38px;
         }
@@ -59,6 +47,11 @@
         <div id="everthing_except_links">
             <br>
             <br>
+            <br>
+            <div>
+                <p style="font-size: 20px;padding: 10px;">The Prediction in Next week </p>
+            </div>
+            <br>
             <div id="wrapper1">
                 <div id="chart-area1">
 
@@ -66,11 +59,28 @@
                 <div id="chart-bar1">
                 </div>
             </div>
+            <br>
+            <div>
+                <p style="font-size: 20px;padding: 10px;">The Prediction in Next month </p>
+            </div>
+            <br>
             <div id="wrapper2">
                 <div id="chart-area2">
 
                 </div>
                 <div id="chart-bar2">
+                </div>
+            </div>
+            <br>
+            <div>
+                <p style="font-size: 20px;padding: 10px;">The Prediction in Next Season </p>
+            </div>
+            <br>
+            <div id="wrapper3">
+                <div id="chart-area3">
+
+                </div>
+                <div id="chart-bar3">
                 </div>
             </div>
             <script>
@@ -81,6 +91,10 @@
             var data2 = generateDayWiseTimeSeries(new Date("22 Apr 2017").getTime(), 115, {
                 min: 40,
                 max: 100
+            });
+            var data3 = generateDayWiseTimeSeries(new Date("22 Apr 2017").getTime(), 115, {
+                min: 15,
+                max: 60
             });
             var options11 = {
                 chart: {
@@ -292,6 +306,111 @@
             };
             var chart22 = new ApexCharts(document.querySelector("#chart-bar2"), options22);
             chart22.render();
+            var options31 = {
+                chart: {
+                    id: "chart32",
+                    type: "area",
+                    height: 230,
+                    foreColor: "#ccc",
+                    toolbar: {
+                        autoSelected: "pan",
+                        show: false
+                    }
+                },
+                colors: ["#00BAEC"],
+                stroke: {
+                    width: 3
+                },
+                grid: {
+                    borderColor: "#555",
+                    yaxis: {
+                        lines: {
+                            show: false
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                fill: {
+                    gradient: {
+                        enabled: true,
+                        opacityFrom: 0.55,
+                        opacityTo: 0
+                    }
+                },
+                markers: {
+                    size: 5,
+                    colors: ["#000524"],
+                    strokeColor: "#00BAEC",
+                    strokeWidth: 3
+                },
+                series: [
+                    {
+                        data: data3
+                    }
+                ],
+                tooltip: {
+                    theme: "dark"
+                },
+                xaxis: {
+                    type: "datetime"
+                },
+                yaxis: {
+                    min: 0,
+                    tickAmount: 4
+                }
+            };
+            var chart31 = new ApexCharts(document.querySelector("#chart-area3"), options31);
+            chart31.render();
+            var options32 = {
+                chart: {
+                    id: "chart31",
+                    height: 130,
+                    type: "bar",
+                    foreColor: "#ccc",
+                    brush: {
+                        target: "chart32",
+                        enabled: true
+                    },
+                    selection: {
+                        fill: {
+                            color: "#fff",
+                            opacity: 0.4
+                        },
+                        xaxis: {
+                            min: new Date("27 Jul 2017 10:00:00").getTime(),
+                            max: new Date("14 Aug 2017 10:00:00").getTime()
+                        }
+                    }
+                },
+                colors: ["#FF0080"],
+                series: [
+                    {
+                        data: data3
+                    }
+                ],
+                stroke: {
+                    width: 2
+                },
+                grid: {
+                    borderColor: "#444"
+                },
+                markers: {
+                    size: 0
+                },
+                xaxis: {
+                    type: "datetime",
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+                yaxis: {
+                    tickAmount: 2
+                }
+            };
+            var chart32 = new ApexCharts(document.querySelector("#chart-bar3"), options32);
+            chart32.render();
             function generateDayWiseTimeSeries(baseval, count, yrange) {
                 var i = 0;
                 var series = [];
@@ -320,19 +439,7 @@
         </div>
 </div>
 
-{#    <div id="相关链接">#}
-{#        <p>#}
-{#        <p style="color: #cbcc8d ;font-size:15px" >Relative links:</p>#}
-{#        <br/>#}
-{#        <a class="link" href="http://www.zju.edu.cn"> <span  style="font-weight: bold;">Visit</span> Zhejiang university</a>#}
-{#        <br/>#}
-{#        <a class="link" href="http://www.baidu.com"> <span  style="font-weight: bold;">Visit</span> baidu</a>#}
-{#        <br/>#}
-{#        <a class="link" href="http://www.google.com"> <span  style="font-weight: bold;">Visit</span> google</a>#}
-{#        <br/>#}
-{#        <a class="link" href="http://www.sina.com"> <span  style="font-weight: bold;">Visit</span> sina</a>#}
-{#        </p>#}
-{#    </div>#}
+
 
     </div>
 
