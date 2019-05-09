@@ -3,24 +3,62 @@ from flask import render_template, redirect ,url_for,flash
 from flask_script import Manager
 from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
-from module.module_file import *
+# from module.module_file import *
+import mysql.connector as connector
+import numpy as np
 import datetime
 from wtforms import StringField, SubmitField, PasswordField
+
 """The global parameters"""
 Is_login = False
 Current_user = None
+oCurrentUser = None
+PORT = 7747
 
 
-
-
-
-# from flask_bootstrap import Bootstrap
-import mysql.connector as connector
 app = Flask(__name__)
 app.secret_key='nishiwobaba'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:00011122q@127.0.0.1/homedata'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+class User(db.Model):
+    #define the table
+    __tabelname__ = 'users'
+    #define ziduan
+    #表示是一个字段
+    id = db.Column(db.Integer,primary_key=True)
+    # register_time = db.Column(db.DateTime)
+    password = db.Column(db.String(255))
+    phone_num = db.Column(db.String(255),unique=True)
+    name = db.Column(db.String(255),unique=True)
+    dataid = db.Column(db.Integer, unique=True)
+
+class Electronics(db.Model):
+    #define the table
+    __tabelname__ = 'electronics'
+    #define ziduan
+    #表示是一个字段
+    num = db.Column(db.Integer,primary_key=True,unique=True)
+    # register_time = db.Column(db.DateTime)
+    elec_name = db.Column(db.String(255))
+    elec_type = db.Column(db.String(255))
+    dataid = db.Column(db.Integer)
+
+class Data(db.Model):
+    __tablename__ = 'userdata'
+    # foreign key
+    num = db.Column(db.Integer,primary_key=True)
+    dataid = db.Column(db.Integer)
+    ts = db.Column(db.DateTime)
+    use_data = db.Column(db.Float)
+
+
+# class LoginForm(FlaskForm):
+#     username = StringField('name')
+#     password = PasswordField('Password')
+#     submit = SubmitField('Submit')
+
+
 # manager = Manager(app)
 # bootstrap = Bootstrap(app)
 
@@ -29,7 +67,34 @@ db = SQLAlchemy(app)
 def index():
     global Is_login
     # print(names)
-    return render_template('index.html',islogin = Is_login)
+    a = np.array([1,4,5,8,7,4])
+    return render_template('index.html',islogin = Is_login, array = a)\
+
+
+
+@app.route('/addelectronics/<elec_name>/<elec_type>')
+def add_elec(elec_name,elec_type):
+    global Is_login
+    if not Is_login:
+        return redirect(url_for('log_in'))
+    # print(names)
+    new_elec = Electronics(elec_type=elec_type,elec_name=elec_name,dataid=oCurrentUser.dataid)
+    db.session.add(new_elec)
+    db.session.commit()
+    return redirect(url_for('data'))\
+
+@app.route('/deleteelectronics/<elec_name>/<elec_type>')
+def delete_elec(elec_name,elec_type):
+    global Is_login
+    if not Is_login:
+        return redirect(url_for('log_in'))
+    # print(names)
+    wanted_elec = Electronics.query.filter(Electronics.dataid == oCurrentUser.dataid,Electronics.elec_name == elec_name, Electronics.elec_type == elec_type).first()
+    db.session.delete(wanted_elec)
+    db.session.commit()
+    return redirect(url_for('data'))
+
+
 @app.route('/register/<username>/<password>/<phone>')
 def register(username,password,phone):
     new_user = User(name=username,password=password,phone_num=phone)
@@ -37,12 +102,14 @@ def register(username,password,phone):
     db.session.commit()
     return redirect(url_for('log_in'))
 
-@app.route('/return/<current_user>')
+@app.route('/loginsuccess/<current_user>')
 def return_user(current_user):
-    global Current_user
+    global Current_user,Is_login,oCurrentUser
+    Is_login = True
     Current_user = current_user
+    oCurrentUser = User.query.filter(User.name == current_user).first()
     print(Current_user)
-    return None
+    return redirect(url_for('data'))
 
 @app.route('/log_in')
 def log_in():
@@ -68,17 +135,28 @@ def contact_us():
     if not Is_login:
         return redirect(url_for('log_in'))
     else:
-        return render_template('html/contact_us.html')
+        return render_template('html/contact_us.html',)
 
 
 @app.route('/data')
 def data():
-    global Is_login
+    global Is_login,Current_user
     if Is_login == False:
-        Is_login = True
-        return render_template('html/data.html')
+        return redirect(url_for('log_in'))
     else:
-        return render_template('html/data.html')
+        global oCurrentUser
+        current_id = oCurrentUser.dataid
+        print(current_id)
+        result = Electronics.query.filter(Electronics.dataid == 370).all()
+        print(result)
+        form = []
+        for one in result:
+            tem = []
+            tem.append(one.elec_name)
+            tem.append(one.elec_type)
+            form.append(tem)
+
+        return render_template('html/data.html',current_user=Current_user,form = form)
 
 
 @app.route('/graph')
@@ -87,16 +165,19 @@ def graph():
     if not Is_login:
         return redirect(url_for('log_in'))
     else:
-        return render_template('html/graph.html')
+        return render_template('html/graph.html',current_user=Current_user)
 
-
+# prdiction route  oad the keras module and predict the data from real data
+# and pass the result_array into prediction.html
 @app.route('/prediction')
 def prediction():
     global Is_login
     if not Is_login:
         return redirect(url_for('log_in'))
     else:
-        return render_template('html/prediction.html')
+        result = Data.query.filter(Data.dataid == Current_user).all()
+
+        return render_template('html/prediction.html',current_user=Current_user)
 
 @app.route('/delete_user/<user_name>')
 def delete_user(user_name):
@@ -135,10 +216,10 @@ def usermanagement():
         names = cur.fetchall()
         conn.close()
         # print(names)
-        return render_template('html/usermanagement.html',names = names)
+        return render_template('html/usermanagement.html',names = names,current_user=Current_user)
 
 
 if __name__ == '__main__':
     # app.run(debug=True, port=8000, host='0.0.0.0')
 
-    app.run(port=7453,debug=True)
+    app.run(port=PORT,debug=True)

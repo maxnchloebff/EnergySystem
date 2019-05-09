@@ -52,7 +52,7 @@ body {
 ul#nav {
     width: 100%;
     height: 50px;
-    background: rgba(0, 165, 201, 0.2);
+    background: rgba(154, 38, 201, 0.2);
 
     margin: 0 auto;
     text-align: center;
@@ -92,7 +92,7 @@ ul#nav li a:hover{
 
 }
 
-#button_add{
+#button_add, #button_delete{
     padding: 20px;
     text-align: center;
     text-decoration: none;
@@ -108,7 +108,7 @@ ul#nav li a:hover{
     text-align: center;
     padding: 10px;
 }
-#add, #cancel{
+#add, #cancel, #delete,#cancel_delete{
     cursor: pointer;
     -webkit-border-radius: 0.5em;
     -moz-border-radius: 0.5em;
@@ -117,6 +117,18 @@ ul#nav li a:hover{
     margin: 10px;
 }
 #添加 {
+    width: 75%;
+    display: none;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px groove whitesmoke;
+    font-size: 20px;
+    text-align: center;
+    margin: 10px auto;
+    background: rgba(0, 165, 201, 0.2);
+
+}
+#删除 {
     width: 75%;
     display: none;
     padding: 20px;
@@ -178,7 +190,7 @@ table{
     border: 1px solid black;
     background-color: #90b4d6;
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: 10px;
 }
 .form_value{
     width: 15%;
@@ -187,7 +199,7 @@ table{
     /*margin: 10px;*/
     background-color: rgba(23,204,178,0.2);
     border: 1px solid black;
-    font-size: 15px;
+    font-size: 10px;
 }
 td.form_value:hover{
     background: #9b5cff;
@@ -197,7 +209,7 @@ tr.head{
     background-color: #90b4d6;
     text-align: left;
     text-shadow: -1px -1px -1px #666666;
-    font-size: 30px;
+    font-size: 10px;
     /*letter-spacing: 0.15em;*/
 }
 tr.form_content{

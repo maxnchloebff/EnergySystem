@@ -1,38 +1,43 @@
-function setCookie(name ,value ,iDay){
-    var oDate = new Date();
-    oDate.setDate(oDate.getDate()+iDay)
-    document.cookie=name+'='+value+'; expires='+oDate;
-}
-setCookie('username','KaiZhang',365);
-setCookie('password','123456',365);
+
 window.onload=function ()
 {
     const obt = document.getElementById("button_add");
+    const delete_button = document.getElementById("button_delete");
     obt.onclick=function (){
         document.getElementById("添加").style.display="block";
+        obt.style.display="none";
+        delete_button.style.display="none";
+    };
+    delete_button.onclick=function (){
+        document.getElementById("删除").style.display="block";
+        delete_button.style.display="none";
         obt.style.display="none";
     };
     const form = document.getElementById("form");
     const add = document.getElementById("add");
+    const delete_confirm = document.getElementById("delete");
+
     add.onclick=function () {
-        var oNew = document.createElement("th");
-        oNew.className="form_tag";
-        var oNewR = document.createElement("tr");
-        oNew.innerHTML=document.getElementsByName("furniture_name")[0].value;
-        oNewR.appendChild(oNew);
-        for(var i = 0;i<5;i++){
-            var oEle = document.createElement("td");
-            oEle.className="form_value";
-            if(i == 0)
-                oEle.innerHTML = document.getElementById("type").value;
-            oNewR.appendChild(oEle);
-        }
-        oNewR.className="form_content";
-        form.appendChild(oNewR);
+        const elec_name =document.getElementsByName("furniture_name")[0].value;
+        const elec_type = document.getElementById("type").value;
+        window.location.href = "/addelectronics/"+elec_name+"/"+elec_type;
+    };
+    delete_confirm.onclick=function () {
+        const elec_name =document.getElementsByName("furniture_name")[1].value;
+        const elec_type = document.getElementById("type_delete").value;
+        window.location.href = "/deleteelectronics/"+elec_name+"/"+elec_type;
     };
     var oCancel = document.getElementById("cancel");
+    var oCancel_delete = document.getElementById("cancel_delete");
     oCancel.onclick=function(){
         document.getElementById("添加").style.display="none";
+        obt.style.display="block";
+        delete_button.style.display="block";
+
+    };
+    oCancel_delete.onclick=function(){
+        document.getElementById("删除").style.display="none";
+        delete_button.style.display="block";
         obt.style.display="block";
 
     };

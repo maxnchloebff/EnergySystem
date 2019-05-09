@@ -83,37 +83,37 @@
 
         <div id = "main">
             <ul id="nav">
-                <li><a class="link" href="/index">首页</a></li>
-                <li><a class="link" href="/data">数据显示</a></li>
-                <li><a class="link" href="/graph">图形显示</a></li>
-                <li><a class="link" href="/prediction">数据预测</a></li>
-                <li><a class="link" href="/usermanagement">用户管理</a></li>
-                <li><a class="link" href="/contact_us">联系我们</a></li>
+                <li><a class="link" href="/index">Index</a></li>
+                <li><a class="link" href="/data">Information</a></li>
+                <li><a class="link" href="/graph">Form and Graph</a></li>
+                <li><a class="link" href="/prediction">Prediction</a></li>
+                <li><a class="link" href="/usermanagement">User Manage</a></li>
+                <li><a class="link" href="/contact_us">Contact Us</a></li>
+                <li><a class="link" href="/usermanagement">Current User is：{{ current_user }}</a></li>
             </ul>
-            <div id="相关链接">
-                <p>
-                <p style="color: #cbcc8d ;font-size:15px" >Relative links:</p>
-                <br/>
-                <a class="link" href="http://www.zju.edu.cn"> <span  style="font-weight: bold;">Visit</span> Zhejiang university</a>
-                <br/>
-                <a class="link" href="http://www.baidu.com"> <span  style="font-weight: bold;">Visit</span> baidu</a>
-                <br/>
-                <a class="link" href="http://www.google.com"> <span  style="font-weight: bold;">Visit</span> google</a>
-                <br/>
-                <a class="link" href="http://www.sina.com"> <span  style="font-weight: bold;">Visit</span> sina</a>
-            </div>
+{#            <div id="相关链接">#}
+{#                <p>#}
+{#                <p style="color: #cbcc8d ;font-size:15px" >Relative links:</p>#}
+{#                <br/>#}
+{#                <a class="link" href="http://www.zju.edu.cn"> <span  style="font-weight: bold;">Visit</span> Zhejiang university</a>#}
+{#                <br/>#}
+{#                <a class="link" href="http://www.baidu.com"> <span  style="font-weight: bold;">Visit</span> baidu</a>#}
+{#                <br/>#}
+{#                <a class="link" href="http://www.google.com"> <span  style="font-weight: bold;">Visit</span> google</a>#}
+{#                <br/>#}
+{#                <a class="link" href="http://www.sina.com"> <span  style="font-weight: bold;">Visit</span> sina</a>#}
+{#            </div>#}
             <div id="everthing_except_links">
                 <!---->
                 <!---->
                 <!---->
                 <div>
-                    <p style="font-size: 18px;padding: 10px;">已经存在的用户：</p>
+                    <p style="font-size: 18px;padding: 10px;">The Existing Users :</p>
                     <br/>
                     <ul id="users">
                         {%for name in names %}
                             <li>{{ name[0]}}</li>
                         {% endfor %}
-
                     </ul>
                 </div>
                 <div class="outer_container">
@@ -152,7 +152,17 @@
                     <!---->
                     <!---->
                 </fieldset>
+                <div id="联系方式">
+                    <p id="bottom">Please feel free to contact with me <a  class="link" href = "mailto:1277358582@qq.com"> Email me</a>
+                <br/>
+                If you want to log out, please click <a class="link" href ="../html/log_in.html">here</a>
+                    </p>
+                </div>
+                <div id="copyright">
+                    <p>&copy;The copy right is reserved to Inteligence Home Group</p>
+                </div>
             </div>
+
 
         </div>
     </body>

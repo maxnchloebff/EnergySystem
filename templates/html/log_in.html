@@ -26,8 +26,7 @@
                 for (index=0;index<users.length;index++){
                     if(oUser.value==users[index] && oPass.value==password[index])
                     {
-                        window.location.href = '/return/'+ users[index];
-                        window.location.href ="/data";
+                        window.location.href = '/loginsuccess/'+ users[index];
                         window.alert("Login Success!!!");
                         break;
                     }
