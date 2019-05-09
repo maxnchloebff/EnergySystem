@@ -14,7 +14,7 @@ from wtforms import StringField, SubmitField, PasswordField
 Is_login = False
 Current_user = None
 oCurrentUser = None
-PORT = 6248
+PORT = 6201
 
 
 
@@ -65,14 +65,9 @@ class Data(db.Model):
 # bootstrap = Bootstrap(app)
 
 
-@app.route('/index')
-def index():
-    global Is_login
-    # print(names)
-    a = np.array([1,4,5,8,7,4])
-    return render_template('index.html',islogin = Is_login, array = a)\
 
 
+"""All the functions we want to achieve"""
 
 @app.route('/addelectronics/<elec_name>/<elec_type>')
 def add_elec(elec_name,elec_type):
@@ -113,6 +108,41 @@ def return_user(current_user):
     print(Current_user)
     return redirect(url_for('data'))
 
+@app.route('/delete_user/<user_name>')
+def delete_user(user_name):
+    certain_user = User.query.filter(User.name == user_name).first()
+    if certain_user:
+        try:
+            db.session.delete(certain_user)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            print("There is something wrong")
+            db.session.rollback()
+    else:
+        print('There is no such user')
+
+    return redirect(url_for('usermanagement'))
+
+@app.route('/add_user/<user_name>/<password>/<phone_num>')
+def add_user(user_name,password,phone_num):
+    new_user = User(name=user_name,phone_num=phone_num,password=password)
+    db.session.add(new_user)
+    db.session.commit()
+    return redirect(url_for('data'))
+
+"""All the Basic Route to render"""
+
+@app.route('/')
+def empty():
+    return redirect(url_for('index'))
+@app.route('/index')
+def index():
+    global Is_login
+    # print(names)
+    a = np.array([1,4,5,8,7,4])
+    return render_template('index.html',islogin = Is_login, array = a)
+
 @app.route('/log_in')
 def log_in():
     conn = connector.connect(user='root', password='00011122q', db='bigdata', charset='utf8')
@@ -138,6 +168,15 @@ def contact_us():
         return redirect(url_for('log_in'))
     else:
         return render_template('html/contact_us.html',)
+
+@app.route('/alarm')
+def alarm():
+    global Is_login
+    if not Is_login:
+        return redirect(url_for('log_in'))
+    else:
+        Is_alarm = True
+        return render_template('html/alarm.html',current_user = Current_user,Is_alarm = Is_alarm)
 
 
 @app.route('/data')
@@ -177,11 +216,12 @@ def prediction():
     if not Is_login:
         return redirect(url_for('log_in'))
     else:
-        result_week = Data.query.filter(Data.dataid == oCurrentUser.dataid,Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080).all()
-        result_month = Data.query.filter(Data.dataid == oCurrentUser.dataid,Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080*4).all()
-        result_season = Data.query.filter(Data.dataid == oCurrentUser.dataid,Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080*4*3).all()
-
-        print()
+        result_week = Data.query.filter(Data.dataid == oCurrentUser.dataid,
+                                        Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080).all()
+        result_month = Data.query.filter(Data.dataid == oCurrentUser.dataid,
+                                         Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080*4).all()
+        result_season = Data.query.filter(Data.dataid == oCurrentUser.dataid,
+                                          Data.ts>datetime.datetime(year=2018,month=7,day=10)).limit(10080*4*3).all()
         data_week = []
         data_month = []
         data_season = []
@@ -216,30 +256,9 @@ def prediction():
                 tem.append(one.use_data)
                 data_month.append(tem)
 
-        return render_template('html/prediction.html', current_user=Current_user, data_season=data_season,data_week=data_week,data_month=data_month)
+        return render_template('html/prediction.html', current_user=Current_user,
+                               data_season=data_season,data_week=data_week,data_month=data_month)
 
-@app.route('/delete_user/<user_name>')
-def delete_user(user_name):
-    certain_user = User.query.filter(User.name == user_name).first()
-    if certain_user:
-        try:
-            db.session.delete(certain_user)
-            db.session.commit()
-        except Exception as e:
-            print(e)
-            print("There is something wrong")
-            db.session.rollback()
-    else:
-        print('There is no such user')
-
-    return redirect(url_for('usermanagement'))
-
-@app.route('/add_user/<user_name>/<password>/<phone_num>')
-def add_user(user_name,password,phone_num):
-    new_user = User(name=user_name,phone_num=phone_num,password=password)
-    db.session.add(new_user)
-    db.session.commit()
-    return redirect(url_for('data'))
 
 @app.route('/usermanagement')
 def usermanagement():
