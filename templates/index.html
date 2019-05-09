@@ -12,6 +12,7 @@
         {
             const oButton_system = document.getElementById("access_to_system");
             const oButton_new_user = document.getElementById("register_new_user");
+            const oButton_login = document.getElementById("Log-in");
             oButton_system.onclick = function(){
                 {% if islogin == True%}
                     window.location.href ="/data";
@@ -22,6 +23,9 @@
 
             };
             oButton_new_user.onclick = function(){
+                window.location.href ="/log_in";
+            };
+            oButton_login.onclick = function(){
                 window.location.href ="/log_in";
             };
         };
@@ -50,10 +54,13 @@
     <!--</div>-->
 
         <button id="access_to_system" class = rotate_button>
-            进入系统
+            Access To The System
         </button>
         <button id="register_new_user" class = rotate_button>
-            注册新用户
+            Register New User
+        </button>
+        <button id="Log-in" class = rotate_button>
+            Log-in
         </button>
 </div>
 

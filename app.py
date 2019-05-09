@@ -13,7 +13,8 @@ from wtforms import StringField, SubmitField, PasswordField
 Is_login = False
 Current_user = None
 oCurrentUser = None
-PORT = 2567
+PORT = 2561
+
 
 
 app = Flask(__name__)
@@ -175,9 +176,14 @@ def prediction():
     if not Is_login:
         return redirect(url_for('log_in'))
     else:
-        result = Data.query.filter(Data.dataid == Current_user).all()
+        result = Data.query.filter(Data.dataid == oCurrentUser.dataid).all()
+        data = []
+        time = []
+        for one in result:
+            data.append(one.use_data)
+            time.append(one.ts)
 
-        return render_template('html/prediction.html',current_user=Current_user)
+        return render_template('html/prediction.html', current_user=Current_user, data=data,ts=time)
 
 @app.route('/delete_user/<user_name>')
 def delete_user(user_name):

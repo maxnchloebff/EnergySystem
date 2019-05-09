@@ -2,7 +2,7 @@ body {
     font-family:"Comic Sans MS", "Monotype Corsiva", cursive;
     font-size: 20px;
     background:  url("../image/bg.jpg") 0 0 repeat;
-    color: rgba(181, 95, 80, 0.99);
+    color: rgb(255, 255, 255);
 }
 h1{
     width: 50%;
