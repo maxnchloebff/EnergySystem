@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+
+
+
+.pies-container {
+    width: 100%;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.info-pie,
+.info-piesecond {
+    position: relative;
+    display: block;
+    margin: 20px auto;
+    max-width: 350px;
+    height: 350px;
+
+}
+.info-pie svg,
+.info-piesecond svg {
+    max-width: 350px;
+    max-height: 350px;
+    position: relative;
+}
+.info-pie svg path,
+.info-piesecond svg path {
+    cursor: pointer;
+    transform-origin: center center;
+    transition: 0.3s ease;
+}
+.info-pie svg path:hover,
+.info-piesecond svg path:hover {
+    transform: scale(1.2);
+}
+.info-pie__slide,
+.info-piesecond__slide {
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 5px 5px 30px #aaa;
+    padding: 1em;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    opacity: 0;
+    z-index: -1;
+    transition: 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 3px;
+    transform: translateX(0%) scale(0);
+}
+.info-pie__slide--isActive,
+.info-piesecond__slide--isActive {
+    opacity: 1;
+    transform: translateX(110%) scale(1);
+}
+.info-pie__slide--isActiveToTop,
+.info-piesecond__slide--isActiveToTop {
+    opacity: 1;
+    transform: translateY(-100%) scale(1);
+    z-index: 1;
+}
+.info-pie__slide--isActiveToBottom,
+.info-piesecond__slide--isActiveToBottom {
+    opacity: 1;
+    transform: translateY(100%) scale(1);
+    z-index: 1;
+}
+.info-pie__label,
+.info-piesecond__label {
+    font-size: 1.5em;
+    margin: 0.5em 0;
+}
+
+@keyframes path_animation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
